@@ -40,53 +40,56 @@ This script generates a visual representation of the directory structure of a sp
 ```bash
  pip install tree-scribe
 ```
+```bash
+ pipx install tree-scribe
+```
 
 ## Command-Line Switches
 
 | Switch/Option            | Description                                                     | Example Usage                       |
 | ------------------------ | --------------------------------------------------------------- | ----------------------------------- |
-| `<directory-path>`       | Path to the root directory whose structure you want to display. | `python main.py /home/project`      |
-| `-md`, `--export-md`     | Export the directory structure to a Markdown file.              | `python main.py /home/project -md`  |
-| `-d`, `--depth <number>` | Limit the depth of directory traversal.                         | `python main.py /home/project -d 2` |
-| `-v`, `--verbose`        | Enable verbose logging for detailed output.                     | `python main.py /home/project -v`   |
-| `-c`, `--color`          | Enable colorful output in the terminal.                         | `python main.py /home/project -c`   |
+| `<directory-path>`       | Path to the root directory whose structure you want to display. | `tree-scribe /home/project`      |
+| `-md`, `--export-md`     | Export the directory structure to a Markdown file.              | `tree-scribe /home/project -md`  |
+| `-d`, `--depth <number>` | Limit the depth of directory traversal.                         | `tree-scribe /home/project -d 2` |
+| `-v`, `--verbose`        | Enable verbose logging for detailed output.                     | `tree-scribe /home/project -v`   |
+| `-c`, `--color`          | Enable colorful output in the terminal.                         | `tree-scribe /home/project -c`   |
 
 ## Examples
 
 1. **Display the Directory Structure**
 
    ```bash
-   python main.py /home/project
+   tree-scribe /home/project
    ```
 
 2. **Export to Markdown**
 
    ```bash
-   python main.py /home/project --export-md
+   tree-scribe /home/project --export-md
    ```
 
 3. **Limit Depth to 2 Levels**
 
    ```bash
-   python main.py /home/project --depth 2
+   tree-scribe /home/project --depth 2
    ```
 
 4. **Enable Verbose Logging**
 
    ```bash
-   python main.py /home/project --verbose
+   tree-scribe /home/project --verbose
    ```
 
 5. **Enable Colorful Output**
 
    ```bash
-   python main.py /home/project -c
+   tree-scribe /home/project -c
    ```
 
 6. **Combine Options**
 
    ```bash
-   python main.py /home/project --export-md --depth 3 -c
+   tree-scribe /home/project --export-md --depth 3 -c
    ```
 
 ### Notes
