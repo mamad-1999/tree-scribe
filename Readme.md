@@ -28,7 +28,6 @@ This script generates a visual representation of the directory structure of a sp
     ├── utils.go
 ```
 
-
 ## Features
 
 - **Visual Directory Tree**: Display the directory structure in a tree-like format.
@@ -38,14 +37,9 @@ This script generates a visual representation of the directory structure of a sp
 
 ## Installation
 
-1.  Ensure you have Python installed (version 3.6 or later recommended).
-2.  Install the required Python packages:
-
         ```bash
-        pip install colorama
+         pip install tree-scribe
         ```
-
-    (just need in -c switch for colorful, you don't need install package for run the script)
 
 ## Command-Line Switches
 
@@ -118,7 +112,6 @@ This script is provided under the MIT License. See the LICENSE file for more inf
 Feel free to submit issues, suggestions, or pull requests. Contributions are welcome!
 
 ##### Summary of Additions
+
 - **Customizing Filters**: Instructions for modifying the `filters.py` file to include or exclude specific directories from the output.
 - **Adding/Removing Folders**: Clear steps on how to update the `EXCLUDED_DIRECTORIES` list.
-
-
