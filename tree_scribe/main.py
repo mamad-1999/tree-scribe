@@ -3,7 +3,7 @@ import sys
 import argparse
 import logging
 
-from filters import EXCLUDED_DIRECTORIES
+from tree_scribe.filters import EXCLUDED_DIRECTORIES
 
 # Import colorama only if the -c switch is used
 colorama_enabled = False
