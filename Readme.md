@@ -37,9 +37,9 @@ This script generates a visual representation of the directory structure of a sp
 
 ## Installation
 
-        ```bash
-         pip install tree-scribe
-        ```
+```bash
+ pip install tree-scribe
+```
 
 ## Command-Line Switches
 
