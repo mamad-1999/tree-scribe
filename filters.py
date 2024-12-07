@@ -21,4 +21,5 @@ EXCLUDED_DIRECTORIES = [
     '.ropeproject',          # Rope project directory
     '.svn',                  # Subversion directory
     '.hg',                   # Mercurial directory
+    '.next',                 # Next-Js build directory
 ]
