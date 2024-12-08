@@ -76,6 +76,10 @@ def print_directory_tree(root_dir, indent="", depth=None, current_depth=0, color
         return "", 0
 
     dir_color, file_color = get_colorama_color() if color_mode else ('', '')
+    # Define size and line count color
+    size_color = Fore.MAGENTA if color_mode else ''
+    reset_color = Style.RESET_ALL if color_mode else ''
+
     tree_structure = ""
     file_count = 0
     for index, item in enumerate(items):
@@ -84,7 +88,7 @@ def print_directory_tree(root_dir, indent="", depth=None, current_depth=0, color
         if os.path.isdir(path):
             # Calculate folder size
             folder_size = calculate_folder_size(path)
-            size_str = f"({format_size(folder_size)})"
+            size_str = f"{size_color}({format_size(folder_size)}){reset_color}"
             tree_structure += f"{indent}├── {dir_color}{item}/ {size_str}\n" if color_mode else f"{indent}├── {item}/ {size_str}\n"
             new_indent = indent + "│   " if not is_last else indent + "    "
             subdir_structure, subdir_file_count = print_directory_tree(
@@ -92,7 +96,19 @@ def print_directory_tree(root_dir, indent="", depth=None, current_depth=0, color
             tree_structure += subdir_structure
             file_count += subdir_file_count
         else:
-            tree_structure += f"{indent}├── {file_color}{item}\n" if color_mode else f"{indent}├── {item}\n"
+            # Get file size and line count
+            try:
+                file_size = os.path.getsize(path)
+                file_size_str = format_size(file_size)
+
+                with open(path, "r", encoding="utf-8", errors="ignore") as file:
+                    line_count = sum(1 for _ in file)
+                line_info = f"{size_color}({line_count} lines, {file_size_str}){reset_color}"
+            except Exception as e:
+                logging.debug(f"Error reading file {path}: {e}")
+                line_info = f"{size_color}(Unreadable){reset_color}"
+
+            tree_structure += f"{indent}├── {file_color}{item} {line_info}\n" if color_mode else f"{indent}├── {item} {line_info}\n"
             file_count += 1
     return tree_structure, file_count
 
