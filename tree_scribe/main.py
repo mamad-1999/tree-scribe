@@ -50,7 +50,7 @@ def calculate_folder_size(folder_path):
     return total_size
 
 
-def print_directory_tree(root_dir, indent="", depth=None, current_depth=0, color_mode=False):
+def print_directory_tree(root_dir, indent="", depth=None, current_depth=0, color_mode=False, show_size=False):
     if depth is not None and current_depth > depth:
         return "", 0
 
@@ -76,7 +76,6 @@ def print_directory_tree(root_dir, indent="", depth=None, current_depth=0, color
         return "", 0
 
     dir_color, file_color = get_colorama_color() if color_mode else ('', '')
-    # Define size and line count color
     size_color = Fore.MAGENTA if color_mode else ''
     reset_color = Style.RESET_ALL if color_mode else ''
 
@@ -86,27 +85,27 @@ def print_directory_tree(root_dir, indent="", depth=None, current_depth=0, color
         path = os.path.join(root_dir, item)
         is_last = index == len(items) - 1
         if os.path.isdir(path):
-            # Calculate folder size
-            folder_size = calculate_folder_size(path)
-            size_str = f"{size_color}({format_size(folder_size)}){reset_color}"
+            folder_size = calculate_folder_size(path) if show_size else 0
+            size_str = f"{size_color}({format_size(folder_size)}){reset_color}" if show_size else ""
             tree_structure += f"{indent}├── {dir_color}{item}/ {size_str}\n" if color_mode else f"{indent}├── {item}/ {size_str}\n"
             new_indent = indent + "│   " if not is_last else indent + "    "
             subdir_structure, subdir_file_count = print_directory_tree(
-                path, new_indent, depth, current_depth + 1, color_mode)
+                path, new_indent, depth, current_depth + 1, color_mode, show_size)
             tree_structure += subdir_structure
             file_count += subdir_file_count
         else:
-            # Get file size and line count
-            try:
-                file_size = os.path.getsize(path)
-                file_size_str = format_size(file_size)
+            line_info = ""
+            if show_size:
+                try:
+                    file_size = os.path.getsize(path)
+                    file_size_str = format_size(file_size)
 
-                with open(path, "r", encoding="utf-8", errors="ignore") as file:
-                    line_count = sum(1 for _ in file)
-                line_info = f"{size_color}({line_count} lines, {file_size_str}){reset_color}"
-            except Exception as e:
-                logging.debug(f"Error reading file {path}: {e}")
-                line_info = f"{size_color}(Unreadable){reset_color}"
+                    with open(path, "r", encoding="utf-8", errors="ignore") as file:
+                        line_count = sum(1 for _ in file)
+                    line_info = f"{size_color}({line_count} lines, {file_size_str}){reset_color}"
+                except Exception as e:
+                    logging.debug(f"Error reading file {path}: {e}")
+                    line_info = f"{size_color}(Unreadable){reset_color}"
 
             tree_structure += f"{indent}├── {file_color}{item} {line_info}\n" if color_mode else f"{indent}├── {item} {line_info}\n"
             file_count += 1
@@ -138,6 +137,8 @@ def main():
                         help="Enable verbose logging")
     parser.add_argument("-c", "--color", action="store_true",
                         help="Enable colorful output")
+    parser.add_argument("-s", "--size", action="store_true",
+                        help="Show file sizes and line counts")
 
     args = parser.parse_args()
 
@@ -148,6 +149,7 @@ def main():
     export_md = args.export_md
     depth = args.depth
     color = args.color
+    show_size = args.size
 
     if not os.path.isdir(root_dir):
         logging.error(
@@ -158,7 +160,7 @@ def main():
     # Disable color mode if exporting to Markdown
     color_mode = color if not export_md else False
     tree_structure, file_count = print_directory_tree(
-        root_dir, depth=depth, color_mode=color_mode)
+        root_dir, depth=depth, color_mode=color_mode, show_size=show_size)
     print(Fore.YELLOW + root_dir if color else root_dir)
     print(tree_structure)
     print(f"\n├──────── [{file_count} files]")
