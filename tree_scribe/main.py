@@ -156,12 +156,11 @@ def main():
             "The provided path is not a valid directory. Please try again.")
         sys.exit(1)
 
-    logging.info(f"Starting directory scan for: {root_dir}")
     # Disable color mode if exporting to Markdown
     color_mode = color if not export_md else False
     tree_structure, file_count = print_directory_tree(
         root_dir, depth=depth, color_mode=color_mode, show_size=show_size)
-    print(Fore.YELLOW + root_dir if color else root_dir)
+    print("\n")
     print(tree_structure)
     print(f"\n├──────── [{file_count} files]")
 
