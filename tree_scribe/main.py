@@ -2,6 +2,7 @@ import os
 import sys
 import argparse
 import logging
+from traceback import format_list
 
 from tree_scribe.filters import EXCLUDED_DIRECTORIES
 
@@ -25,6 +26,28 @@ def get_colorama_color():
         return Fore.GREEN, Fore.CYAN
     else:
         return '', ''
+
+
+def format_size(size):
+    """Format file size in human-readable form."""
+    for unit in ['B', 'KB', 'MB', 'GB', 'TB']:
+        if size < 1024:
+            return f"{size:.2f} {unit}"
+        size /= 1024
+    return f"{size:.2f} PB"
+
+
+def calculate_folder_size(folder_path):
+    """Calculate the total size of all files in a folder."""
+    total_size = 0
+    for root, _, files in os.walk(folder_path):
+        for file in files:
+            file_path = os.path.join(root, file)
+            try:
+                total_size += os.path.getsize(file_path)
+            except Exception as e:
+                logging.debug(f"Error getting size for {file_path}: {e}")
+    return total_size
 
 
 def print_directory_tree(root_dir, indent="", depth=None, current_depth=0, color_mode=False):
@@ -59,11 +82,10 @@ def print_directory_tree(root_dir, indent="", depth=None, current_depth=0, color
         path = os.path.join(root_dir, item)
         is_last = index == len(items) - 1
         if os.path.isdir(path):
-            # Check if the directory is a symlink
-            if os.path.islink(path):
-                logging.debug(f"Skipping symlink directory: {path}")
-                continue
-            tree_structure += f"{indent}├── {dir_color}{item}/\n" if color_mode else f"{indent}├── {item}/\n"
+            # Calculate folder size
+            folder_size = calculate_folder_size(path)
+            size_str = f"({format_size(folder_size)})"
+            tree_structure += f"{indent}├── {dir_color}{item}/ {size_str}\n" if color_mode else f"{indent}├── {item}/ {size_str}\n"
             new_indent = indent + "│   " if not is_last else indent + "    "
             subdir_structure, subdir_file_count = print_directory_tree(
                 path, new_indent, depth, current_depth + 1, color_mode)
