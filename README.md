@@ -31,6 +31,7 @@ This script generates a visual representation of the directory structure of a sp
 | `-d`, `--depth <number>` | Limit the depth of directory traversal.                         | `tree-scribe /home/project -d 2` |
 | `-v`, `--verbose`        | Enable verbose logging for detailed output.                     | `tree-scribe /home/project -v`   |
 | `-c`, `--color`          | Enable colorful output in the terminal.                         | `tree-scribe /home/project -c`   |
+| `-s`, `--size`           | Show line and size.                                             | `tree-scribe /home/project -s`   |
 
 ## Examples
 
@@ -63,11 +64,17 @@ This script generates a visual representation of the directory structure of a sp
    ```bash
    tree-scribe /home/project -c
    ```
-
-6. **Combine Options**
+   
+6. **Show line and size**
 
    ```bash
-   tree-scribe /home/project --export-md --depth 3 -c
+   tree-scribe /home/project -s
+   ```
+
+7. **Combine Options**
+
+   ```bash
+   tree-scribe /home/project --export-md --depth 3 -c -s
    ```
 
 ### Notes
