@@ -2,22 +2,40 @@
 
 This script generates a visual representation of the directory structure of a specified root directory. It supports exporting the structure to a Markdown file and offers various options to customize the output.
 
+```
+Usage: tree-script [SWITCHES] directory
+
+Generate a directory tree structure for a given path, with options for depth
+limitation, colorful output, file sizes, and exporting to Markdown.
+
+positional arguments:
+  directory             Path to the root directory to analyze
+
+optional arguments:
+  -h, --help            Show this help message and exit
+  -md, --export-md      Export the directory structure to a Markdown file
+  -d DEPTH, --depth DEPTH
+                        Limit the depth of directory traversal (e.g., -d 2)
+  -v, --verbose         Enable verbose logging for debugging purposes
+  -c, --color           Enable colorful output for better readability
+  -s, --size            Show file sizes and line counts in the output
+
+Examples:
+  tree-script /path/to/directory
+  tree-script /path/to/directory -d 2 -s
+  tree-script /path/to/directory -md -c
+```
+
 ### Example Output
 
 ![-d](https://github.com/user-attachments/assets/dea8ad31-55ae-4658-9ccd-06074719c769)
-
-## Features
-
-- **Visual Directory Tree**: Display the directory structure in a tree-like format.
-- **Export to Markdown**: Save the directory structure to a Markdown file for documentation purposes.
-- **Depth Limiting**: Limit the depth of directory traversal to avoid overwhelming outputs for deep directory structures.
-- **Colorful Output**: Colorize the terminal output to differentiate directories from files.
 
 ## Installation
 
 ```bash
  pip install tree-scribe
 ```
+Or
 ```bash
  pipx install tree-scribe
 ```
@@ -77,15 +95,6 @@ This script generates a visual representation of the directory structure of a sp
    tree-scribe /home/project --export-md --depth 3 -c -s
    ```
 
-### Notes
-
-- **Colorful Output**: The `-c` or `--color` switch enables colorful terminal output using `colorama`. Without this switch, the output will be plain text.
-- **Depth Limiting**: Use the `--depth` option to control how many levels deep the directory tree should be displayed.
-- **Verbose Mode**: The `--verbose` option provides more detailed logging information during script execution.
-- **Markdown Export**: The `--export-md` option saves the directory structure to a Markdown file for documentation purposes.
-
-For any additional options or troubleshooting, please refer to the [Troubleshooting](#troubleshooting) section of this documentation.
-
 ### Troubleshooting
 
 - Permission Errors: If you encounter permission errors, make sure you have the necessary permissions to access the directories and files.
@@ -98,8 +107,3 @@ This script is provided under the MIT License. See the LICENSE file for more inf
 ### Contributing
 
 Feel free to submit issues, suggestions, or pull requests. Contributions are welcome!
-
-##### Summary of Additions
-
-- **Customizing Filters**: Instructions for modifying the `filters.py` file to include or exclude specific directories from the output.
-- **Adding/Removing Folders**: Clear steps on how to update the `EXCLUDED_DIRECTORIES` list.
