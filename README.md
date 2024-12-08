@@ -35,21 +35,24 @@ Examples:
 ```bash
  pip install tree-scribe
 ```
+
 Or
+
 ```bash
  pipx install tree-scribe
 ```
 
 ## Command-Line Switches
 
-| Switch/Option            | Description                                                     | Example Usage                       |
-| ------------------------ | --------------------------------------------------------------- | ----------------------------------- |
-| `<directory-path>`       | Path to the root directory whose structure you want to display. | `tree-scribe /home/project`      |
-| `-md`, `--export-md`     | Export the directory structure to a Markdown file.              | `tree-scribe /home/project -md`  |
-| `-d`, `--depth <number>` | Limit the depth of directory traversal.                         | `tree-scribe /home/project -d 2` |
-| `-v`, `--verbose`        | Enable verbose logging for detailed output.                     | `tree-scribe /home/project -v`   |
-| `-c`, `--color`          | Enable colorful output in the terminal.                         | `tree-scribe /home/project -c`   |
-| `-s`, `--size`           | Show line and size.                                             | `tree-scribe /home/project -s`   |
+| Switch/Option            | Description                                                     | Example Usage                                              |
+| ------------------------ | --------------------------------------------------------------- | ---------------------------------------------------------- |
+| `<directory-path>`       | Path to the root directory whose structure you want to display. | `tree-scribe /home/project`                                |
+| `-md`, `--export-md`     | Export the directory structure to a Markdown file.              | `tree-scribe /home/project -md`                            |
+| `-d`, `--depth <number>` | Limit the depth of directory traversal.                         | `tree-scribe /home/project -d 2`                           |
+| `-v`, `--verbose`        | Enable verbose logging for detailed output.                     | `tree-scribe /home/project -v`                             |
+| `-c`, `--color`          | Enable colorful output in the terminal.                         | `tree-scribe /home/project -c`                             |
+| `-s`, `--size`           | Show line and size.                                             | `tree-scribe /home/project -s`                             |
+| `--exclude`              | Exclude file and folder.                                        | `tree_scribe /path/to/directory --exclude dist build .git` |
 
 ## Examples
 
@@ -82,7 +85,7 @@ Or
    ```bash
    tree-scribe /home/project -c
    ```
-   
+
 6. **Show line and size**
 
    ```bash
@@ -93,6 +96,12 @@ Or
 
    ```bash
    tree-scribe /home/project --export-md --depth 3 -c -s
+   ```
+
+8. **Exclude files or folder**
+
+   ```bash
+   tree_scribe /path/to/directory --exclude dist build .git
    ```
 
 ### Troubleshooting

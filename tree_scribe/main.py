@@ -9,9 +9,8 @@ from tree_scribe.utils.logging_config import setup_logging
 
 
 def main():
-    # Create a parser object with a detailed description
     parser = argparse.ArgumentParser(
-        prog="tree-script",
+        prog="tree-scribe",
         description=(
             "Generate a directory tree structure for a given path, "
             "with options for depth limitation, colorful output, file sizes, "
@@ -19,9 +18,10 @@ def main():
         ),
         epilog=(
             "Examples:\n"
-            "  tree-script /path/to/directory\n"
-            "  tree-script /path/to/directory -d 2 -s\n"
-            "  tree-script /path/to/directory -md -c\n\n"
+            "  tree-scribe /path/to/directory\n"
+            "  tree_scribe /path/to/directory -s -c -d 0 --exclude dist build .git"
+            "  tree-scribe /path/to/directory -md -c\n\n"
+            "For full details, refer to the documentation or use --help."
         ),
         formatter_class=argparse.RawTextHelpFormatter  # Preserve newlines in the epilog
     )
@@ -56,6 +56,11 @@ def main():
         action="store_true",
         help="Show file sizes and line counts in the output"
     )
+    parser.add_argument(
+        "--exclude",
+        nargs='+',
+        help="Exclude specific directories from the output (e.g., --exclude .git .next)"
+    )
 
     # Parse arguments
     args = parser.parse_args()
@@ -79,13 +84,14 @@ def main():
     depth = args.depth
     color = args.color
     show_size = args.size
+    exclude = args.exclude or []
 
     # Disable color mode if exporting to Markdown
     color_mode = color if not export_md else False
 
     # Generate directory tree
     tree_structure, file_count = print_directory_tree(
-        root_dir, depth=depth, color_mode=color_mode, show_size=show_size
+        root_dir, depth=depth, color_mode=color_mode, show_size=show_size, exclude=exclude
     )
 
     # Print the tree structure

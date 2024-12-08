@@ -6,7 +6,7 @@ from tree_scribe.utils.helpers import format_size, calculate_folder_size
 visited_directories = set()
 
 
-def print_directory_tree(root_dir, indent="", depth=None, current_depth=0, color_mode=False, show_size=False):
+def print_directory_tree(root_dir, indent="", depth=None, current_depth=0, color_mode=False, show_size=False, exclude=None):
     """
     Generate and print the directory tree structure.
 
@@ -17,6 +17,7 @@ def print_directory_tree(root_dir, indent="", depth=None, current_depth=0, color
         current_depth (int): Current traversal depth.
         color_mode (bool): Enable colorful output.
         show_size (bool): Display file sizes and line counts.
+        exclude (list): List of directories to exclude.
 
     Returns:
         tuple: (tree_structure, file_count) where `tree_structure` is the 
@@ -37,8 +38,10 @@ def print_directory_tree(root_dir, indent="", depth=None, current_depth=0, color
     visited_directories.add(root_dir)
 
     try:
-        items = [item for item in sorted(os.listdir(root_dir))
-                 if not (os.path.isdir(os.path.join(root_dir, item)) and item in {"node_modules", ".git", "__pycache__"})]
+        items = [
+            item for item in sorted(os.listdir(root_dir))
+            if item not in (exclude or [])  # Exclude directories
+        ]
     except PermissionError as e:
         logging.error(f"Permission denied: {root_dir}")
         return "", 0
@@ -69,7 +72,7 @@ def print_directory_tree(root_dir, indent="", depth=None, current_depth=0, color
             tree_structure += f"{indent}├── {dir_color}{item}/ {size_str}{reset_color}\n" if not is_last else f"{indent}└── {dir_color}{item}/ {size_str}{reset_color}\n"
             new_indent = indent + ("│   " if not is_last else "    ")
             subdir_structure, subdir_file_count = print_directory_tree(
-                path, new_indent, depth, current_depth + 1, color_mode, show_size)
+                path, new_indent, depth, current_depth + 1, color_mode, show_size, exclude)
             tree_structure += subdir_structure
             file_count += subdir_file_count
         else:
