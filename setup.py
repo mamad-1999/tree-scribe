@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 setup(
     # Package name (must be unique on PyPI)
     name="tree-scribe",
-    version="0.0.5",                     # Initial version
+    version="0.0.6",                     # Initial version
     description="Generate and export directory tree structures with optional color output.",
     author="mamad1999",
     author_email="www.mmhmdmm83@gmail.com",
