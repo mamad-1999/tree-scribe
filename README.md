@@ -4,29 +4,7 @@ This script generates a visual representation of the directory structure of a sp
 
 ### Example Output
 
-```
-├── .env
-├── .gitignore
-├── README.md
-├── config/
-│   ├── env.go
-├── data/
-│   ├── found-url.json
-│   ├── url.txt
-├── db/
-│   ├── db.go
-├── directory_structure.md
-├── go.mod
-├── go.sum
-├── main.go
-├── rss/
-│   ├── fetch.go
-├── telegram/
-│   ├── telegram.go
-├── utils/
-    ├── http.go
-    ├── utils.go
-```
+![-d](https://github.com/user-attachments/assets/dea8ad31-55ae-4658-9ccd-06074719c769)
 
 ## Features
 
